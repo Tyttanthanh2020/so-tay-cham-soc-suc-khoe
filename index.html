@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#1976d2" />
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+  <title>Sổ tay sức khỏe gia đình</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon-192.png" sizes="192x192">
+  <meta name="description" content="Sổ tay điện tử tương tác – Chăm sóc sức khỏe gia đình theo mô hình y học gia đình.">
+  <!-- Tailwind CSS CDN (self-hosting recommended for production) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- React & ReactDOM UMD -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <!-- Framer Motion UMD -->
+  <script src="https://unpkg.com/framer-motion/dist/framer-motion.umd.js"></script>
+  <style>
+    /* Basic print styles */
+    @media print {
+      .no-print { display: none !important; }
+      body { color: #000; }
+    }
+  </style>
+
+  <style>
+    #zalo-badge { position: fixed; bottom: 8px; right: 8px; font-size: 10px; background: rgba(2, 6, 23, 0.7); color: #fff; padding: 4px 8px; border-radius: 9999px; z-index: 50; }
+  </style>
+
+</head>
+<body class="bg-slate-50 text-slate-900">
+  <div id="root"></div>
+  <script>
+    // Register service worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js');
+      });
+    }
+  </script>
+  
+  <script>
+    (function(){
+      window.__ZALO__ = {
+        inZalo: /Zalo/i.test(navigator.userAgent),
+        params: new URLSearchParams(location.search)
+      };
+      // Append a small badge (can be removed in production)
+      try {
+        const b = document.createElement('div');
+        b.id = 'zalo-badge';
+        b.textContent = window.__ZALO__.inZalo ? 'Zalo WebView' : 'Browser';
+        document.addEventListener('DOMContentLoaded', ()=> document.body.appendChild(b));
+      } catch(e){}
+    })();
+  </script>
+
+  <script src="app.js"></script>
+</body>
+</html>
